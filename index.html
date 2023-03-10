@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Jacob's Website</title>
+
+    <style>
+        h1 {
+        color: #DD22AB;
+        text-align: center;
+        }
+
+        p {
+        text-align: center;
+        }
+
+        body {
+        background-color: #22dd54;
+        }
+
+        button {
+        align: center;
+        }
+
+    </style>
+
+    <script>
+        const jesse = new Audio("https://www.televisiontunes.com/uploads/audio/Breaking%20Bad.mp3");
+        const jessimg = new Image(300, 300);
+        jessimg.src = "walterwhite.jpg";
+
+        function buttonFunction() {
+           document.getElementById('demo').innerHTML = Date();
+           document.getElementById("jessi").innerHTML = document.body.appendChild(jessimg);
+           jesse.play();
+
+        }
+    </script>
+
+</head>
+
+<body>
+
+<h1>Jacob Dennon's Website!</h1>
+
+<button type="button"
+        onclick="buttonFunction()">
+    Yo. Click me, yo
+</button>
+<p id="demo"></p>
+<br>
+<br>
+<p id="jessi"></p>
+
+</body>
+</html>

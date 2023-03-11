@@ -6,28 +6,53 @@
 
     <style>
 
-        #container {
-        background-color: #F9F6F0;
-        color: #014d4e;
-        position: relative
-        width: 50%;
+        div.container {
+        background-color: #FEFFF3;
+        color: #4A6A61;
+        width: 80%;
+        margin: auto;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        padding-left: 20px;
         }
 
-        #txtelement{
-            color: #ffa724;
+        div.container img {
+            height: auto
+            width: 50%
+            float:left;
         }
 
-        p {
-        text-align: center;
+        #widths {
+            max-width: 30%
+        }
+
+        #highlight{
+            color:#FFC450
+        }
+
+        #center {
+            text-align:center;
         }
 
         body {
-        background-color: #014d4e;
+        background-color: #4A6A61;
         }
 
         button {
         align: center;
         }
+
+        div.demo {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        }
+        div.demo span {
+        display: table-cell;
+        text-align: center;
+        }
+
+
 
     </style>
 
@@ -35,16 +60,19 @@
 
 <body>
 
-<div>
-    <a id="txtelement" href="pages/about.html">About This</a>
-    <a id="txtelement" href="pages/about.html">About This</a>
-    <a id="txtelement" href="pages/about.html">About This</a>
-    <br>
-    <br>
+<div class="demo" id="highlight">
+    <span><a id="highlight" href="pages/about.html">About This</a></span>
+    <span><a id="highlight" href="pages/about.html">Test</a></span>
+    <span><a id="highlight" href="pages/about.html">Test</a></span>
 </div>
 
-<div id="container">
-    <p>This is my website. As you could probably tell, this is a work in progress.</p>
+<div class="container">
+    <h1 id="center"> About Me! </h1>
+    <p><img id="widths" src="imgs/hotdog.jpg" alt="nice"> Hi, my name is Jacob. I'm building a website. Here's my <a href="https://www.linkedin.com/in/jacob-dennon-7032ab254/">LinkedIn</a></p>
+</div>
+
+<div class="container">
+    <h1 id="center"> Another Box!</h1>
 </div>
 
 </body>

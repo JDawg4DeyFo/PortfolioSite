@@ -5,9 +5,16 @@
     <title>Jacob's Website</title>
 
     <style>
-        h1 {
-        color: #DD22AB;
-        text-align: center;
+
+        #container {
+        background-color: #F9F6F0;
+        color: #014d4e;
+        position: relative
+        width: 50%;
+        }
+
+        #txtelement{
+            color: #ffa724;
         }
 
         p {
@@ -15,7 +22,7 @@
         }
 
         body {
-        background-color: #22dd54;
+        background-color: #014d4e;
         }
 
         button {
@@ -24,33 +31,21 @@
 
     </style>
 
-    <script>
-        const jesse = new Audio("https://www.televisiontunes.com/uploads/audio/Breaking%20Bad.mp3");
-        const jessimg = new Image(300, 300);
-        jessimg.src = "walterwhite.jpg";
-
-        function buttonFunction() {
-           document.getElementById('demo').innerHTML = Date();
-           document.getElementById("jessi").innerHTML = document.body.appendChild(jessimg);
-           jesse.play();
-
-        }
-    </script>
-
 </head>
 
 <body>
 
-<h1>Jacob Dennon's Website!</h1>
+<div>
+    <a id="txtelement" href="pages/about.html">About This</a>
+    <a id="txtelement" href="pages/about.html">About This</a>
+    <a id="txtelement" href="pages/about.html">About This</a>
+    <br>
+    <br>
+</div>
 
-<button type="button"
-        onclick="buttonFunction()">
-    Yo. Click me, yo
-</button>
-<p id="demo"></p>
-<br>
-<br>
-<p id="jessi"></p>
+<div id="container">
+    <p>This is my website. As you could probably tell, this is a work in progress.</p>
+</div>
 
 </body>
 </html>

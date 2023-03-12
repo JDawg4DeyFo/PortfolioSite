@@ -6,7 +6,7 @@
 
     <style>
 
-        div.container {
+        .container {
         background-color: #FEFFF3;
         color: #4A6A61;
         width: 80%;
@@ -14,16 +14,20 @@
         padding-right: 20px;
         padding-bottom: 20px;
         padding-left: 20px;
+        border: 10px  solid #F1F3F1;
+        display: block;
+        overflow: hidden;
         }
 
-        div.container img {
-            height: auto
-            width: 50%
-            float:left;
+        .container img {
+
         }
 
         #widths {
-            max-width: 30%
+            width: 25%;
+            height: auto;
+            float: left;
+            padding-right: 15px;
         }
 
         #highlight{
@@ -36,20 +40,26 @@
 
         body {
         background-color: #4A6A61;
+        font-family: Verdana;
         }
 
         button {
         align: center;
         }
 
-        div.demo {
+        .demo {
         display: table;
         width: 100%;
         table-layout: fixed;
         }
-        div.demo span {
+        .demo span {
         display: table-cell;
         text-align: center;
+        }
+
+        p {
+            font-size: 108%;
+            line-height: 1.35;
         }
 
 
@@ -59,21 +69,24 @@
 </head>
 
 <body>
-
 <div class="demo" id="highlight">
     <span><a id="highlight" href="pages/about.html">About This</a></span>
-    <span><a id="highlight" href="pages/about.html">Test</a></span>
-    <span><a id="highlight" href="pages/about.html">Test</a></span>
+    <span><a id="highlight" href="https://www.youtube.com/watch?v=KC5H9P4F5Uk">STEVIE RAY VAUGHAN!!!!</a></span>
+    <span><a id="highlight" href="pages/Catalog.html">Catalog</a></span>
+    <span><a id="highlight" href="pages/archive.html">Archive</a></span>
 </div>
-
+<br>
 <div class="container">
     <h1 id="center"> About Me! </h1>
-    <p><img id="widths" src="imgs/hotdog.jpg" alt="nice"> Hi, my name is Jacob. I'm building a website. Here's my <a href="https://www.linkedin.com/in/jacob-dennon-7032ab254/">LinkedIn</a></p>
+    <p><img id="widths" src="imgs/hotdog.jpg" alt="nice"> Hi, my name is Jacob. I'm building a website. Here's my <a href="https://www.linkedin.com/in/jacob-dennon-7032ab254/">LinkedIn</a>.
+        I'm a first year Electrical Engineering student, and I like challenging myself to do cool things. I run, mountainbike, hike, swim, and drive at a reasonable speed.
+    </p>
 </div>
-
+<br>
 <div class="container">
     <h1 id="center"> Another Box!</h1>
-</div>
 
+</div>
+<br>
 </body>
 </html>

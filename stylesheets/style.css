@@ -14,7 +14,13 @@ footer {
 
 a {
     color:#FFC450;
+    font-size: 16px;
 }
+
+p {
+    font-size: 108%;
+    line-height: 1.35;
+    }
 
 .container {
     background-color: #FEFFF3;
@@ -29,20 +35,8 @@ a {
     overflow: hidden;
 }
 
-#widths {
-    width: 25%;
-    height: auto;
-    float: left;
-    padding-right: 15px;
-}
-        
-
-#center {
-    text-align:center;
-}
-
 .link-header {
-    display:flex;
+    display: flex;
     justify-content: space-between;
     }
 
@@ -53,10 +47,16 @@ a {
     margin-bottom: 0;
     }
 
-p {
-    font-size: 108%;
-    line-height: 1.35;
+
+.post-text{
+    text-indent: 5%;
     }
+    
+
+.link-header > a {
+    display:inline;
+
+}
 
 .title + p {
     font-size:80%;
@@ -64,6 +64,18 @@ p {
     margin-top: 2px;
 }
 
-.post-text{
-    text-indent: 5%;
-    }
+#widths {
+    width: 25%;
+    height: auto;
+    float: left;
+    padding-right: 15px;
+}
+            
+    
+#center {
+    text-align:center;
+}
+
+#hide {
+    visibility: hidden;
+}

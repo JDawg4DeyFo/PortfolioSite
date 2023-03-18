@@ -1,11 +1,10 @@
 
 body {
-
     font-family: Verdana;
-    color:#FEFFF3;
+    color:#4A6A61;
     display:flex;
     flex-direction: column;
-    }
+}
 
 footer {
     display:flex;
@@ -28,29 +27,25 @@ a {
     border: 10px  solid #F1F3F1;
     display: block;
     overflow: hidden;
-    }
+}
 
 #widths {
     width: 25%;
     height: auto;
     float: left;
     padding-right: 15px;
-    }
+}
         
 
-        #center {
-            text-align:center;
-        }
+#center {
+    text-align:center;
+}
 
-        .demo {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-        }
-        .demo span {
-        display: table-cell;
-        text-align: center;
-        }
+.link-header {
+    display:flex;
+    justify-content: space-between;
+    }
+
 .title {
     display: flex;
     align-items: center;
@@ -67,7 +62,7 @@ p {
     font-size:80%;
     text-align: center;
     margin-top: 2px;
-    }
+}
 
 .post-text{
     text-indent: 5%;

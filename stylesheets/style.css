@@ -1,3 +1,10 @@
+@media all and (orientation: portrait) {
+    .main-content {
+        flex-direction: row;
+        overflow: hidden;
+    }
+}
+
 
 body {
     font-family: Verdana;

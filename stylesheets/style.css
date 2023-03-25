@@ -71,6 +71,32 @@ p {
     margin-top: 2px;
 }
 
+.image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px;
+    margin-bottom: 25px;
+}
+
+.image-frame {
+    position: relative;
+    text-align: center;
+    border: 5px  solid #F1F3F1;
+}
+
+.image-description {
+    font-size: smaller;
+    position: absolute;
+    bottom: 101%;
+    width: 100%;
+    text-align: center;
+}
+
+.post-image {
+    width:90%;
+}
+
 #widths {
     width: 25%;
     height: auto;

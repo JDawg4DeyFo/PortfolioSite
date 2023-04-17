@@ -81,6 +81,9 @@ p {
     justify-content: center;
     margin: 30px;
     margin-bottom: 25px;
+    width:50%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .image-frame {
@@ -98,7 +101,7 @@ p {
 }
 
 .post-image {
-    width:90%;
+    width:100%;
 }
 
 #widths {

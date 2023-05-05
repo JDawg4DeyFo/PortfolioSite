@@ -9,17 +9,19 @@
     }
 }
 
+:root {
+    --prim1: #4A6A61;
+    --prim2: #FEFFF3;
+    --seco1: #F1F3F1;
+    --high: #FFC450;
+    --background: #FEFFF3;
+}
 
 .panel {
-    padding:0;
-    margin:0;
-    color: #4A6A61;
-    border: 2px solid;
-    width: 85%;
-    align-self: center;
+    color: var(--prim1);
 }
 .panel-header {
-    background-color: #F1F3F1;
+    background-color: var(--seco1);
     margin-top: 0px;
     display: flex;
     padding:0;
@@ -29,4 +31,44 @@
 .row {
     display: flex;
     justify-content: space-between;
+}
+
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+.button button {
+    background-color: green;
+    color: white;
+    font-family: Verdana;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.col-header {
+    border:solid 1px;
+    width: 100%;
+}
+
+button:hover {
+    background-color: darkgreen;
+    transform: scale(1.1);
+}
+
+button:active {
+    background-color: green;
+    color: white;
+}
+
+legend {
+    font-size: 1.2rem; /* change the font size to 1.2 rem */
+    font-weight: bold; /* make the text bold */
+    color: var(--prim1); /* change the text color */
+    margin-bottom: 10px; /* add some bottom margin for spacing */
 }

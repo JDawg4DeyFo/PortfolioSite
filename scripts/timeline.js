@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		const LastHour = 7 * 24;
 		const time = point.getAttribute("data-time");
 		const TimeInteger = parseInt(time, 10);
+		const BreakLine = document.createElement('br');
 
 		const percentage = (TimeInteger / LastHour) * 100;
 		point.style.left = percentage + "%";
@@ -18,15 +19,21 @@ document.addEventListener("DOMContentLoaded", function() {
 			const title = point.textContent;
 
 			const searchstring = '[data-timep="' + time + '"]';
-			const descriptionElement = document.querySelector(searchstring);
-			const description = descriptionElement.textContent;
+			const descriptionElements = document.querySelectorAll(searchstring);
   
 			const popupContent = document.querySelector(".popup .content");
 			popupContent.innerHTML = `
 			<span class="close">&times;</span>
 			<h2>${title}</h2>
-			<p>${description}</p>
 			`;
+
+			descriptionElements.forEach(function(desc) {
+				const NewDescriptionPElement = document.createElement('p');
+				NewDescriptionPElement.textContent = desc.textContent;
+
+				popupContent.append(NewDescriptionPElement);
+				popupContent.append(BreakLine);
+			});
   
 			popup.style.display = "block";
 		});

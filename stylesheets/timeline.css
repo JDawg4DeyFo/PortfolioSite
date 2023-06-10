@@ -1,0 +1,64 @@
+.timeline {
+	position: relative;
+	margin: 20px;
+	border-top: 1px solid black;
+	padding-bottom: 10px;
+	width: 95%;
+}
+
+.point {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	border-color: orange;
+	border-style: solid;
+	border-radius: 70%;
+	cursor: pointer;
+}
+
+.popup {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup .content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	max-width: 400px;
+}
+
+.popup .close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+}
+
+.data-holder {
+	display: none;
+}
+
+.date-label {
+	width: 2px; /* Adjust the width as needed */
+	height: 10px; /* Adjust the height as needed */
+	background-color: #000; /* Adjust the background color as needed */
+	position: absolute;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}

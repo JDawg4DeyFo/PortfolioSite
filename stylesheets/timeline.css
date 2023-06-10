@@ -10,9 +10,6 @@
 	position: absolute;
 	width: 10px;
 	height: 10px;
-	border-color: orange;
-	border-style: solid;
-	border-radius: 70%;
 	cursor: pointer;
 }
 

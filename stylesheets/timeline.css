@@ -1,9 +1,16 @@
+:root {
+    --prim1: #4A6A61;
+    --prim2: #FEFFF3;
+    --seco1: #F1F3F1;
+    --high: #FFC450;
+    --background: #FEFFF3;
+}
+
 .timeline {
 	position: relative;
 	margin: 20px;
 	border-top: 1px solid black;
-	padding-bottom: 10px;
-	width: 95%;
+	width:97%;
 }
 
 .point {
@@ -60,9 +67,28 @@
 	font-size: larger;
 }
 
+.title {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 20px;
+	margin: 0;
+	color: var(--prim1);
+  }
+  
+
 body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
 }
+
+footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 20px;
+  }

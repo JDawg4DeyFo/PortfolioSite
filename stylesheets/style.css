@@ -40,6 +40,18 @@ p {
     line-height: 1.35;
     }
 
+button {
+    background-color: var(--high);
+    color: var(--prim1);
+    font-family: Verdana;
+    border: solid 2px var(--prim1);
+    border-radius: 6px;
+    font-size: 108%;
+}
+button:hover {
+    background-color: var(--high);
+}
+
 .container {
     background-color: var(--background);
     color: var(--prim1);

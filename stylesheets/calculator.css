@@ -20,12 +20,19 @@
 .panel {
     color: var(--prim1);
 }
+
 .panel-header {
     background-color: var(--seco1);
     margin-top: 0px;
     display: flex;
     padding:0;
     font-size: 60%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .row {

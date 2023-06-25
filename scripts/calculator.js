@@ -6,24 +6,25 @@ calculate on button click
 integrate base stats
 */
 (function() {
-  // Attach event listener to calculate button
-  const calculateButton = document.querySelector('#calculate-button');
-  calculateButton.addEventListener('click', calculateGPA);
+  //Attach event listener to calculate button
+  //const calculateButton = document.querySelector('#calculate-button');
+  //calculateButton.addEventListener('click', calculateGPA);
 
   // Attach event listener to add course button
   const addCourseButton = document.querySelector('#add-course-button');
   addCourseButton.addEventListener('click', addCourseInput);
-  console.log("we good");
+
+  const RemoveCourseButton = document.querySelector('#remove-course-button');
+  RemoveCourseButton.addEventListener('click', RemoveCourseInput);
 })();
 
 function addCourseInput(event) {
   event.preventDefault();
 
-  console.log("we in here");
-
   // Clone the course input fields
   const courseInputTemplate = document.querySelector('#course-input');
   const newCourseInput = courseInputTemplate.cloneNode(true);
+  const BreakLine = document.createElement('br');
 
   // Clear the input values of the cloned fields
   newCourseInput.querySelector('#coursename').value = '';
@@ -33,6 +34,23 @@ function addCourseInput(event) {
   // Append the cloned fields to the form
   const coursesContainer = document.querySelector('#courses-container');
   coursesContainer.appendChild(newCourseInput);
+  coursesContainer.appendChild(BreakLine);
+}
+
+function RemoveCourseInput(event) {
+  event.preventDefault();
+
+  const ParentElement = document.querySelector('#courses-container');
+  const RemoveCourseButton = event.target;
+
+  // change to remove form documentqueryselectorall(courses-container) and br
+  ParentElement.removeChild(ParentElement.lastChild); // remove br
+  ParentElement.removeChild(ParentElement.lastChild); // remove input
+
+  // Remove the remove button if there's only one element left.
+  if (document.querySelectorAll('#course-input').length <= 1) {
+    RemoveCourseButton.style.display = "none";
+  }
 }
 
 function calculateGPA(event) {

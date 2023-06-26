@@ -25,6 +25,9 @@ function addCourseInput(event) {
   const courseInputTemplate = document.querySelector('#course-input');
   const newCourseInput = courseInputTemplate.cloneNode(true);
   const BreakLine = document.createElement('br');
+  const RemoveCourseButton = document.querySelector('#remove-course-button');
+
+  BreakLine.id = "big-fat-rock";
 
   // Clear the input values of the cloned fields
   newCourseInput.querySelector('#coursename').value = '';
@@ -33,19 +36,24 @@ function addCourseInput(event) {
 
   // Append the cloned fields to the form
   const coursesContainer = document.querySelector('#courses-container');
-  coursesContainer.appendChild(newCourseInput);
-  coursesContainer.appendChild(BreakLine);
+
+  coursesContainer.append(BreakLine);
+  coursesContainer.append(newCourseInput);
+
+  // Make sure remove button is visible
+  RemoveCourseButton.style.display = "inline-block";
 }
 
 function RemoveCourseInput(event) {
   event.preventDefault();
-
+  const InputElements = document.querySelectorAll('#course-input');
+  const BigRocks = document.querySelectorAll('#big-fat-rock');
   const ParentElement = document.querySelector('#courses-container');
   const RemoveCourseButton = event.target;
 
-  // change to remove form documentqueryselectorall(courses-container) and br
-  ParentElement.removeChild(ParentElement.lastChild); // remove br
-  ParentElement.removeChild(ParentElement.lastChild); // remove input
+  // remove stuff
+  ParentElement.removeChild(InputElements[InputElements.length - 1]);
+  ParentElement.removeChild(BigRocks[BigRocks.length -1 ]);
 
   // Remove the remove button if there's only one element left.
   if (document.querySelectorAll('#course-input').length <= 1) {

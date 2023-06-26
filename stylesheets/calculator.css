@@ -19,6 +19,10 @@
 
 .panel {
     color: var(--prim1);
+    border: 1px solid var(--prim1);
+    padding:2px;
+    width:40%;
+    align-self: center;
 }
 
 .panel-header {
@@ -74,8 +78,8 @@ button:active {
 }
 
 legend {
-    font-size: 1.2rem; /* change the font size to 1.2 rem */
-    font-weight: bold; /* make the text bold */
-    color: var(--prim1); /* change the text color */
-    margin-bottom: 10px; /* add some bottom margin for spacing */
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--prim1);
+    margin-bottom: 10px;
 }

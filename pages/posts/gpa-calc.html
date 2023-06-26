@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>JDawg's GPA Calculator</title>
-    <base href="../../index.html"> <!--make sure to change this path according to document-->
+    <base href="../../index.html">
     <link rel="stylesheet" href="stylesheets/calculator.css">
     <link rel="stylesheet" href="stylesheets/style.css">
 </head>
@@ -31,7 +31,7 @@
             </div>
         </fieldset>
         <br>
-        <fieldset class="panel" id="courses-container">
+        <fieldset id="courses-container">
             <legend>Courses</legend>
             <div class="input row" id="course-input">
                 <div>
@@ -102,5 +102,18 @@
             <button id="add-course-button">Add Course</button>
         </div>
     </div>
+
+    <div class="button-container">
+        <button id="calculate-button">Calculate GPA</button>
+    </div>
+    <br>
+    <div class="panel" id="result-container">
+        <div id="result"></div>
+    </div>
+
     <script src="scripts/calculator.js"></script>
+
+    <footer>
+        <a href="index.html">Home</a>
+    </footer>
 </body>

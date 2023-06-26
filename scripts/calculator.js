@@ -1,21 +1,19 @@
-/*
-TO DO:
-clone html elements to add courses on button click
-get values from html elements
-calculate on button click
-integrate base stats
-*/
 (function() {
   //Attach event listener to calculate button
-  //const calculateButton = document.querySelector('#calculate-button');
-  //calculateButton.addEventListener('click', calculateGPA);
+  const calculateButton = document.querySelector('#calculate-button');
+  calculateButton.addEventListener('click', calculateGPA);
 
   // Attach event listener to add course button
   const addCourseButton = document.querySelector('#add-course-button');
   addCourseButton.addEventListener('click', addCourseInput);
 
+  // Attach event listener to remove course button
   const RemoveCourseButton = document.querySelector('#remove-course-button');
   RemoveCourseButton.addEventListener('click', RemoveCourseInput);
+
+  // Make sure result box is invisible
+  const ResultBox = document.querySelector('#result-container');
+  ResultBox.style.display = "none";
 })();
 
 function addCourseInput(event) {
@@ -68,29 +66,39 @@ function calculateGPA(event) {
   const currentGPAInput = document.querySelector('#currentgpa');
   const totalUnitsInput = document.querySelector('#totalunits');
   const currentGPA = parseFloat(currentGPAInput.value);
-  const totalUnits = parseInt(totalUnitsInput.value);
+  const currentUnits = parseInt(totalUnitsInput.value);
+  const ResultBox = document.querySelector('#result-container');
+  
+  // Make the result visible
+  ResultBox.style.display = "flex";
 
   // Retrieve course inputs
-  const courseInputs = document.querySelectorAll('.course-input');
+  const courseInputs = document.querySelectorAll('#course-input');
   let totalGradePoints = 0;
-  let totalCredits = 0;
+  let totalUnits = 0;
 
   // Calculate grade points and credits for each course
   courseInputs.forEach((input) => {
-    const courseName = input.querySelector('.coursename').value;
-    const grade = parseFloat(input.querySelector('.grade').value);
-    const credits = parseInt(input.querySelector('.credits').value);
+    const grade = parseFloat(input.querySelector('#grade').value);
+    const units = parseInt(input.querySelector('#units').value);
 
     // Calculate grade points for the course
-    const gradePoints = grade * credits;
+    const gradePoints = grade * units;
     totalGradePoints += gradePoints;
 
     // Add course credits to the total credits
-    totalCredits += credits;
+    totalUnits += units;
   });
 
   // Calculate cumulative GPA
-  const cumulativeGPA = (currentGPA * totalUnits + totalGradePoints) / (totalUnits + totalCredits);
+  let cumulativeGPA = 0;
+  if (isNaN(currentGPA) || isNaN(currentGPA)) {
+    console.log("shit");
+    cumulativeGPA = totalGradePoints / totalUnits;
+  } else {
+    console.log("not in here");
+    cumulativeGPA = (currentGPA * currentUnits + totalGradePoints) / (totalUnits + currentUnits);
+  }
 
   // Display the calculated GPA
   const resultContainer = document.querySelector('#result');

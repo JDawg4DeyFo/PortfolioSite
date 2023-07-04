@@ -126,6 +126,9 @@ button:hover {
 .tag-data {
     display: none;
 }
+.data-all-posts {
+    display: none;
+}
 
 #widths {
     width: 25%;

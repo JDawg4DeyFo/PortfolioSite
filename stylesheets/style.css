@@ -123,6 +123,10 @@ button:hover {
     width:100%;
 }
 
+.tag-data {
+    display: none;
+}
+
 #widths {
     width: 25%;
     height: auto;

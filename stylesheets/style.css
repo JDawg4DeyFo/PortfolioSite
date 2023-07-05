@@ -123,10 +123,10 @@ button:hover {
     width:100%;
 }
 
-.tag-data {
+#tag-data {
     display: none;
 }
-.data-all-posts {
+#data-all-posts {
     display: none;
 }
 

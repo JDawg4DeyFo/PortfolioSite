@@ -1,6 +1,15 @@
-let DotMatrix = [];
+const fragment = document.createDocumentFragment();
 
-function MandelbrotAlgorithm(TopLeft, BottomRight, Zoom) {
+const MaxColorValue = 0xFFFFFF;
+const XBoundary = 2;
+const YBoundary  = XBoundary;
+const XDots = 200;
+const YDots = 200;
+
+let DotMatrix = [];
+let Zoom = 1;
+
+function MandelbrotAlgorithm(TopLeft) {
   /*
   for each pixel (Px, Py) on the screen do
       x0 := scaled x coordinate of pixel (scaled to lie in the Mandelbrot X scale (-2.00, 0.47))
@@ -22,8 +31,30 @@ function MandelbrotAlgorithm(TopLeft, BottomRight, Zoom) {
 
 
   DotMatrix.forEach(function (Item, Index) {
-    Item.forEach(function (NestedItem, NestedIndex) {
+    const OGx = TopLeft[0];
+    const OGy = TopLeft[1];
+    const deltax = (XBoundary * 2) / (Zoom * XDots);
+    const deltay = (YBoundary * 2) / (Zoom * YDots);
 
+    Item.forEach(function (NestedItem, NestedIndex) {
+      const x0 = TopLeft[0] + (deltax * NestedIndex);
+      const y0 = TopLeft[1] + (deltay * Index);
+      
+      let x = 0;
+      let y = 0;
+      let iteration = 0;
+
+      while ((x*x) + (y*y) <= 2*2 && (iteration < MaxIteration)) {
+        const xtemp = x*x - y * y + x0;
+        y = 2*x*y + y0;
+        x = xtemp;
+        iteration++;
+      }
+
+      const ColorValue = Math.floor((iteration / MaxIteration) * MaxColorValue);
+      const ColorString = "#" + ColorValue.toString('16');
+
+      NestedItem.style.color = ColorString;
     });
   });
 }
@@ -31,9 +62,15 @@ function MandelbrotAlgorithm(TopLeft, BottomRight, Zoom) {
 function ZoomIn(MouseX, MouseY) {
   console.log('zoomed in', { MouseX, MouseY });
   /*
-    need to set up new coords for each dotxel on zoom in
-    joe comon black top she got ju ju eyeballs!
+    manage zoom
+    set up top left pixel coord
+      - mouse position is middle
+    Call algorithm
   */
+  Zoom++;
+  const TopLeftDotxel = [MouseX - (XBoundary / Zoom), MouseY - (YBoundary / Zoom)];
+
+  MandelbrotAlgorithm(TopLeftDotxel);
 }
 
 (function () {
@@ -52,14 +89,12 @@ function ZoomIn(MouseX, MouseY) {
 
   // populate screen with apropriate rows and cols of dots.
   console.log({ DotWidth, DotHeight, ViewportWidth, ViewportHeight });
-  const Cols = 200;
-  const Rows = 200;
+  const Cols = XDots;
+  const Rows = YDots;
   console.log({ Rows, Cols });
 
   const DotSavior = document.createElement('span');
   DotSavior.textContent = '.';
-
-  fragment = document.createDocumentFragment();
 
   for (let i = 0; i < Rows; i++) {
     DotMatrix[i] = [];
@@ -69,6 +104,7 @@ function ZoomIn(MouseX, MouseY) {
 
     for (let j = 0; j < Cols; j++) {
       const NewDot = DotSavior.cloneNode(true);
+      NewDot.style.color = "rgb(" + Math.floor(Math.random() * 255) + ", " + Math.floor(Math.random() * 255) + ", " + Math.floor(Math.random() * 255) + ")";
 
       DotMatrix[i][j] = NewDot;
 
@@ -79,10 +115,14 @@ function ZoomIn(MouseX, MouseY) {
   document.body.appendChild(fragment);
 
   // Add Event Listeners
-  window.addEventListener('scroll', function (event) {
-    const MouseX = event.ClientX;
-    const MouseY = event.ClinetY;
-
-    ZoomIn(MouseX, MouseY);
+  document.addEventListener('click', function (event) {
+    const MouseX = event.clientX;
+    const MouseY = event.clientY;
+    
+    if (event.ctrlKey) {
+      ZoomOut();
+    } else {
+      ZoomIn(MouseX, MouseY); 
+    }
   })
 })();

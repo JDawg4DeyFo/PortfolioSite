@@ -1,10 +1,15 @@
 div {
-    height: 5px;
-    letter-spacing: 1px;
+    height: 3px;
+    letter-spacing: 0px;
 }
 
 body {
     margin: 0px;
+    background-color: black;
+}
+
+span {
+    font-size: 75%;
 }
 
 #delete-me {

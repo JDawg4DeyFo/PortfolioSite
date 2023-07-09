@@ -8,8 +8,9 @@ const YDots = 200;
 
 let DotMatrix = [];
 let Zoom = 1;
+let TopLeftDotxel = [-2, 2];
 
-function MandelbrotAlgorithm(TopLeft) {
+function MandelbrotAlgorithm() {
   /*
   for each pixel (Px, Py) on the screen do
       x0 := scaled x coordinate of pixel (scaled to lie in the Mandelbrot X scale (-2.00, 0.47))
@@ -31,14 +32,14 @@ function MandelbrotAlgorithm(TopLeft) {
 
 
   DotMatrix.forEach(function (Item, Index) {
-    const OGx = TopLeft[0];
-    const OGy = TopLeft[1];
+    const OGx = TopLeftDotxel[0];
+    const OGy = TopLeftDotxel[1];
     const deltax = (XBoundary * 2) / (Zoom * XDots);
     const deltay = (YBoundary * 2) / (Zoom * YDots);
 
     Item.forEach(function (NestedItem, NestedIndex) {
-      const x0 = TopLeft[0] + (deltax * NestedIndex);
-      const y0 = TopLeft[1] + (deltay * Index);
+      const x0 = OGx + (deltax * NestedIndex);
+      const y0 = OGy - (deltay * Index);
       
       let x = 0;
       let y = 0;
@@ -70,9 +71,9 @@ function ZoomIn(MouseX, MouseY) {
     Call algorithm
   */
   Zoom++;
-  const TopLeftDotxel = [MouseX - (XBoundary / Zoom), MouseY - (YBoundary / Zoom)];
+  TopLeftDotxel = [MouseX - (XBoundary / Zoom), MouseY - (YBoundary / Zoom)];
 
-  MandelbrotAlgorithm(TopLeftDotxel);
+  MandelbrotAlgorithm();
 }
 
 (function () {
@@ -97,6 +98,7 @@ function ZoomIn(MouseX, MouseY) {
 
   const DotSavior = document.createElement('span');
   DotSavior.textContent = '.';
+  DotSavior.style.color = 'white';
 
   for (let i = 0; i < Rows; i++) {
     DotMatrix[i] = [];
@@ -106,7 +108,6 @@ function ZoomIn(MouseX, MouseY) {
 
     for (let j = 0; j < Cols; j++) {
       const NewDot = DotSavior.cloneNode(true);
-      NewDot.style.color = "rgb(" + Math.floor(Math.random() * 255) + ", " + Math.floor(Math.random() * 255) + ", " + Math.floor(Math.random() * 255) + ")";
 
       DotMatrix[i][j] = NewDot;
 
@@ -116,15 +117,26 @@ function ZoomIn(MouseX, MouseY) {
 
   document.body.appendChild(fragment);
 
+  MandelbrotAlgorithm();
+
   // Add Event Listeners
   document.addEventListener('click', function (event) {
     const MouseX = event.clientX;
     const MouseY = event.clientY;
+
+    const BoundaryRect = DotMatrix[XDots - 1][YDots - 1].getBoundingClientRect();
+    
+    const PixelBoundaryX = BoundaryRect.right;
+    const PixelBoundaryY = BoundaryRect.bottom;
     
     if (event.ctrlKey) {
       ZoomOut();
+    } else if ((MouseX < PixelBoundaryX) && (MouseY < PixelBoundaryY)) {
+      const CoordX = (MouseX / PixelBoundaryX) * (TopLeftDotxel[0] + (2 * XBoundary) / Zoom) + TopLeftDotxel[0];
+      const CoordY = (MouseY / PixelBoundaryY) * (TopLeftDotxel[1] + (2 * YBoundary) / Zoom) + TopLeftDotxel[1];
+      ZoomIn(CoordX, CoordY); 
     } else {
-      ZoomIn(MouseX, MouseY); 
+      console.log("Error: click is outside of bounds");
     }
   })
 })();

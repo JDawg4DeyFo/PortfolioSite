@@ -50,11 +50,13 @@ function MandelbrotAlgorithm(TopLeft) {
         x = xtemp;
         iteration++;
       }
-
+      console.log(iteration);
       const ColorValue = Math.floor((iteration / MaxIteration) * MaxColorValue);
       const ColorString = "#" + ColorValue.toString('16');
 
       NestedItem.style.color = ColorString;
+
+      console.log({ColorString, ColorValue, x0, y0});
     });
   });
 }

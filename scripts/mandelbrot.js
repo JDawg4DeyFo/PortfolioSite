@@ -30,6 +30,7 @@ function MandelbrotAlgorithm() {
   */
   const MaxIteration = 1000;
 
+  console.log({TopLeftDotxel, Zoom});
 
   DotMatrix.forEach(function (Item, Index) {
     const OGx = TopLeftDotxel[0];
@@ -51,13 +52,10 @@ function MandelbrotAlgorithm() {
         x = xtemp;
         iteration++;
       }
-      console.log(iteration);
       const ColorValue = Math.floor((iteration / MaxIteration) * MaxColorValue);
       const ColorString = "#" + ColorValue.toString('16');
 
       NestedItem.style.color = ColorString;
-
-      console.log({ColorString, ColorValue, x0, y0});
     });
   });
 }
@@ -72,6 +70,18 @@ function ZoomIn(MouseX, MouseY) {
   */
   Zoom++;
   TopLeftDotxel = [MouseX - (XBoundary / Zoom), MouseY - (YBoundary / Zoom)];
+
+  if (TopLeftDotxel[0] < -XBoundary) {
+    TopLeftDotxel[0] = -XBoundary;
+  } else if (TopLeftDotxel[0] > XBoundary - (XBoundary / Zoom)) {
+    TopLeftDotxel[0] = XBoundary - (XBoundary / Zoom);
+  }
+
+  if (TopLeftDotxel[1] < -YBoundary) {
+    TopLeftDotxel[1] = -YBoundary;
+  } else if (TopLeftDotxel[1] > YBoundary - (YBoundary / Zoom)) {
+    TopLeftDotxel[1] = YBoundary - (YBoundary / Zoom);
+  }
 
   MandelbrotAlgorithm();
 }
@@ -132,19 +142,9 @@ function ZoomIn(MouseX, MouseY) {
     if (event.ctrlKey) {
       ZoomOut();
     } else if ((MouseX < PixelBoundaryX) && (MouseY < PixelBoundaryY)) {
-      let CoordX = (MouseX / PixelBoundaryX) * (TopLeftDotxel[0] + (2 * XBoundary) / Zoom) + TopLeftDotxel[0];
-      let CoordY = (MouseY / PixelBoundaryY) * (TopLeftDotxel[1] + (2 * YBoundary) / Zoom) + TopLeftDotxel[1];
-      if (CoordX < -XBoundary) {
-        CoordX = -XBoundary;
-      } else if (CoordX > XBoundary - (XBoundary / Zoom)) {
-        CoordX = XBoundary - (XBoundary / Zoom);
-      }
-      if (CoordY < -YBoundary) {
-        CoordY = -YBoundary;
-      } else if (CoordY > YBoundary - (YBoundary / Zoom)) {
-        CoordY = YBoundary - (YBoundary / Zoom);
-      }
-      ZoomIn(CoordX, CoordY); 
+      const CoordX = (MouseX / PixelBoundaryX) * (TopLeftDotxel[0] + (2 * XBoundary) / Zoom) + TopLeftDotxel[0];
+      const CoordY = (MouseY / PixelBoundaryY) * (TopLeftDotxel[1] + (2 * YBoundary) / Zoom) + TopLeftDotxel[1];
+      ZoomIn(CoordX, CoordY);
     } else {
       console.log("Error: click is outside of bounds");
     }

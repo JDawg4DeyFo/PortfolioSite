@@ -132,8 +132,18 @@ function ZoomIn(MouseX, MouseY) {
     if (event.ctrlKey) {
       ZoomOut();
     } else if ((MouseX < PixelBoundaryX) && (MouseY < PixelBoundaryY)) {
-      const CoordX = (MouseX / PixelBoundaryX) * (TopLeftDotxel[0] + (2 * XBoundary) / Zoom) + TopLeftDotxel[0];
-      const CoordY = (MouseY / PixelBoundaryY) * (TopLeftDotxel[1] + (2 * YBoundary) / Zoom) + TopLeftDotxel[1];
+      let CoordX = (MouseX / PixelBoundaryX) * (TopLeftDotxel[0] + (2 * XBoundary) / Zoom) + TopLeftDotxel[0];
+      let CoordY = (MouseY / PixelBoundaryY) * (TopLeftDotxel[1] + (2 * YBoundary) / Zoom) + TopLeftDotxel[1];
+      if (CoordX < -XBoundary) {
+        CoordX = -XBoundary;
+      } else if (CoordX > XBoundary - (XBoundary / Zoom)) {
+        CoordX = XBoundary - (XBoundary / Zoom);
+      }
+      if (CoordY < -YBoundary) {
+        CoordY = -YBoundary;
+      } else if (CoordY > YBoundary - (YBoundary / Zoom)) {
+        CoordY = YBoundary - (YBoundary / Zoom);
+      }
       ZoomIn(CoordX, CoordY); 
     } else {
       console.log("Error: click is outside of bounds");

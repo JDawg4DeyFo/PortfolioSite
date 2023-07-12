@@ -1,4 +1,12 @@
-div {
+:root {
+    --prim1: #4A6A61;
+    --prim2: #FEFFF3;
+    --seco1: #F1F3F1;
+    --high: #FFC450;
+    --background: #FEFFF3;
+}
+
+.dot-container{
     height: 3px;
     letter-spacing: 0px;
 }
@@ -10,6 +18,19 @@ body {
 
 span {
     font-size: 75%;
+}
+
+.popup {
+    background-color: var(--background);
+    color: var(--prim1);
+    width: 80%;
+    margin: auto;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    border: 10px  solid var(--seco1);
+    display: block;
+    overflow: hidden;
 }
 
 #delete-me {

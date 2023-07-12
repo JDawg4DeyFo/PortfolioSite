@@ -97,6 +97,7 @@ function ZoomIn(MouseX, MouseY) {
   const DotTemplate = document.querySelector('#dot-template');
   const BreakLineTemplate = document.createElement('br');
   const DivTemplate = document.createElement('div');
+  DivTemplate.classList.add("dot-container")
 
   const Cols = XDots;
   const Rows = YDots;
@@ -118,7 +119,7 @@ function ZoomIn(MouseX, MouseY) {
     DotMatrix[i] = []; // create row
 
     // We put dots in div because otherwise the spacing would be weird, and the debugger would be laggy
-    NewDiv = DivTemplate.cloneNode(false);
+    NewDiv = DivTemplate.cloneNode(true);
     fragment.append(NewDiv);
 
     for (let j = 0; j < Cols; j++) {

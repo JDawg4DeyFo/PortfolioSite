@@ -8,6 +8,7 @@ const YDots = 200;
 
 let DotMatrix = []; // variable to store all dots in, so each one can be manipulated
 let Zoom = 1; // Zoom to determine delta stuff
+let ZoomIncrement = 1;
 let TopLeftDotxel = [-2, 2]; // Top left dotxel's position in the complex plane.
 
 // This is the function that determines each pixel's place in the mandelbrot set.
@@ -66,7 +67,7 @@ function MandelbrotAlgorithm() {
 function ZoomIn(MouseX, MouseY) {
   console.log('zoomed in', { MouseX, MouseY });
  // increment zooom by 1
-  Zoom++;
+  Zoom += ZoomIncrement;
   // Determine top left dotxel according to mouse click position, boundaries and zoom
   TopLeftDotxel = [MouseX - (XBoundary / Zoom), MouseY + (YBoundary / Zoom)];
 
@@ -89,6 +90,19 @@ function ZoomIn(MouseX, MouseY) {
   }
 
   // Call the algortihm once we're done with top left dotxel manipulation
+  MandelbrotAlgorithm();
+}
+
+function ZoomOut() {
+  console.log('zooming out');
+
+  if (Zoom == 1) {
+    console.log('already zoomed out @ max');
+    return;
+  }
+
+  Zoom -= ZoomIncrement;
+
   MandelbrotAlgorithm();
 }
 
@@ -145,8 +159,6 @@ function ZoomIn(MouseX, MouseY) {
     const MouseX = event.clientX;
     const MouseY = event.clientY;
 
-    console.log({MouseX, MouseY});
-
     // since our dots don't fill the viewport we need to create a rectangle of the bottom right dotxel to determine pix bounds
     const BoundaryRect = DotMatrix[XDots - 1][YDots - 1].getBoundingClientRect();    
     const PixelBoundaryX = BoundaryRect.right;
@@ -159,9 +171,23 @@ function ZoomIn(MouseX, MouseY) {
       const CoordX = (MouseX / PixelBoundaryX) * Math.abs(TopLeftDotxel[0] + (2 * XBoundary) / Zoom) + TopLeftDotxel[0];
       const CoordY = TopLeftDotxel[1] - (MouseY / PixelBoundaryY) * (TopLeftDotxel[1] + (2 * YBoundary) / Zoom);
 
+      console.log({MouseX, MouseY, COo})
+
       ZoomIn(CoordX, CoordY);
     } else {
       console.log("Error: click is outside of bounds");
     }
-  })
+  });
+
+  document.addEventListener('wheel', function (event) {
+    if (event.deltaY > 0) {
+      ZoomIncrement++;
+    } else if (ZoomIncrement > 1) {
+      ZoomIncrement--;
+    } else {
+      console.log('ZoomIncrement is at 1');
+    }
+    console.log({ZoomIncrement});
+  });
+
 })();

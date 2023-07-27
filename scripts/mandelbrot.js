@@ -3,33 +3,18 @@ const fragment = document.createDocumentFragment();
 const MaxColorValue = 0xFFFFFF; // white
 const XBoundary = 2; // How far from origin on one side
 const YBoundary  = XBoundary; // same as x, just y
-const XDots = 200; // basically resolution
-const YDots = 200;
+const XDots = 300; // basically resolution
+const YDots = 300;
 
 let DotMatrix = []; // variable to store all dots in, so each one can be manipulated
 let Zoom = 1; // Zoom to determine delta stuff
 let ZoomIncrement = 1;
 let TopLeftDotxel = [-2, 2]; // Top left dotxel's position in the complex plane.
 
+let ActiveIntervals = [];
+
 // This is the function that determines each pixel's place in the mandelbrot set.
 function MandelbrotAlgorithm() {
-  /*
-  for each pixel (Px, Py) on the screen do
-      x0 := scaled x coordinate of pixel (scaled to lie in the Mandelbrot X scale (-2.00, 0.47))
-      y0 := scaled y coordinate of pixel (scaled to lie in the Mandelbrot Y scale (-1.12, 1.12))
-      x := 0.0
-      y := 0.0
-      iteration := 0
-      max_iteration := 1000
-      while (x*x + y*y ≤ 2*2 AND iteration < max_iteration) do
-          xtemp := x*x - y*y + x0
-          y := 2*x*y + y0
-          x := xtemp
-          iteration := iteration + 1
-
-      color := palette[iteration]
-      plot(Px, Py, color)
-  */
   // initialize variables for loop
   const MaxIteration = 1000;
   const OGx = TopLeftDotxel[0];
@@ -48,15 +33,20 @@ function MandelbrotAlgorithm() {
       
       let x = 0;
       let y = 0;
+      let x2 = 0;
+      let y2 = 0;
       let iteration = 0;
 
-      while ((x*x) + (y*y) <= 2*2 && (iteration < MaxIteration)) {
-        const xtemp = x*x - y * y + x0;
-        y = 2*x*y + y0;
-        x = xtemp;
+      while (x2 + y2 <= 4 && iteration < MaxIteration) {
+        y = 2 * x * y + y0;
+        x = x2 - y2 + x0;
+        x2 = x * x;
+        y2= y * y;
+        
         iteration++;
       }
-      const ColorValue = Math.floor((iteration / MaxIteration) * MaxColorValue);
+
+      const ColorValue = MaxColorValue - Math.floor((iteration / MaxIteration) * MaxColorValue);
       const ColorString = "#" + ColorValue.toString('16').padStart(6, '0'); // hex color code
 
       NestedItem.style.color = ColorString; // change color of dot according to algorithm's will.
@@ -64,46 +54,88 @@ function MandelbrotAlgorithm() {
   });
 }
 
-function ZoomIn(MouseX, MouseY) {
-  console.log('zoomed in', { MouseX, MouseY });
+function ZoomIn(CoordX, CoordY) {
  // increment zooom by 1
   Zoom += ZoomIncrement;
   // Determine top left dotxel according to mouse click position, boundaries and zoom
-  TopLeftDotxel = [MouseX - (XBoundary / Zoom), MouseY + (YBoundary / Zoom)];
+  TopLeftDotxel = [CoordX - (XBoundary / Zoom), CoordY + (YBoundary / Zoom)];
 
   // if the top left dotxel is outside our defined boundary, then set it to nearest edge.
   if (TopLeftDotxel[0] < -XBoundary) {
-    console.log("x less than");
     TopLeftDotxel[0] = -XBoundary;
   } else if (TopLeftDotxel[0] > XBoundary - (XBoundary / Zoom)) {
-    console.log("x greater than");
-    TopLeftDotxel[0] = XBoundary - (XBoundary / Zoom);
+    TopLeftDotxel[0] = XBoundary - ((2 * XBoundary) / Zoom);
   }
 
   // Again, but with y
   if (TopLeftDotxel[1] < -YBoundary) {
-    console.log("y less than");
-    TopLeftDotxel[1] = -YBoundary;
+    TopLeftDotxel[1] = -YBoundary + ((2 * YBoundary) / Zoom);
   } else if (TopLeftDotxel[1] > YBoundary - (YBoundary / Zoom)) {
-    console.log("y greater than");
-    TopLeftDotxel[1] = YBoundary - (YBoundary / Zoom);
+    TopLeftDotxel[1] = YBoundary;
   }
 
   // Call the algortihm once we're done with top left dotxel manipulation
+  console.log('ZoomIn()', {CoordX, CoordY, TopLeftDotxel});
   MandelbrotAlgorithm();
 }
 
 function ZoomOut() {
-  console.log('zooming out');
-
+  // If Zoom is already at 1, do nothing
   if (Zoom == 1) {
-    console.log('already zoomed out @ max');
     return;
   }
 
+  // Decrement Zoom and check(should never happen) if Zoom is less than one
   Zoom -= ZoomIncrement;
+  if (Zoom < 1) {
+    Zoom = 1;
+  }
 
+  // The mandelbrot function will handle everything from here.
   MandelbrotAlgorithm();
+}
+
+function ClosePopup() {
+  // Timeout so that it doesn't register as a click.
+  setTimeout(function() {
+    const ContainerElement = document.querySelector('.information-container');
+    ContainerElement.style.display = 'none';
+  }, 100)
+}
+
+function ZoomIncrementDisplay() {
+  const DisplayIntervalMS = 100;
+  const DisplayTimeMS = 1300;
+  const DisplayIterations = DisplayTimeMS / DisplayIntervalMS;
+
+  const ZoomDisplayContainer = document.querySelector('.increment-display');
+
+  let LocalIndex = 0;
+
+  ZoomDisplayContainer.style.display = 'block';
+  ZoomDisplayContainer.textContent = '+' + ZoomIncrement + 'x';
+
+  ActiveIntervals.push("foo");
+
+  const ActiveIntervalLengthAsWeFoundIt = ActiveIntervals.length;
+
+  let ZoomIntervalID = setInterval(function() {
+    // logic stuff so we don't get a bunch of functions trying to kill the display at the same time
+    if (ActiveIntervalLengthAsWeFoundIt != ActiveIntervals.length) {
+      clearInterval(ZoomIntervalID);
+    }
+    
+    // Check if enough rounds have passed.
+    if (LocalIndex >= DisplayIterations) {
+      ZoomDisplayContainer.style.display = 'none';
+
+      clearInterval(ZoomIntervalID);
+      ActiveIntervals = [];
+    }
+
+    LocalIndex++;
+
+  }, DisplayIntervalMS);
 }
 
 (function () {
@@ -111,6 +143,7 @@ function ZoomOut() {
   const DotTemplate = document.querySelector('#dot-template');
   const BreakLineTemplate = document.createElement('br');
   const DivTemplate = document.createElement('div');
+  const PopupCloseElement = document.querySelector('.close');
   DivTemplate.classList.add("dot-container")
 
   const Cols = XDots;
@@ -166,28 +199,31 @@ function ZoomOut() {
 
     if (event.ctrlKey) {
       ZoomOut();
+    } else if (PopupCloseElement.parentElement.parentElement.style.display != 'none') {
+      console.log('still with popup');
     } else if ((MouseX < PixelBoundaryX) && (MouseY < PixelBoundaryY)) {
       // Determine coords of click in complex plane, send them to zoomin() function.
-      const CoordX = (MouseX / PixelBoundaryX) * Math.abs(TopLeftDotxel[0] + (2 * XBoundary) / Zoom) + TopLeftDotxel[0];
-      const CoordY = TopLeftDotxel[1] - (MouseY / PixelBoundaryY) * (TopLeftDotxel[1] + (2 * YBoundary) / Zoom);
+      const CoordX = ((MouseX / PixelBoundaryX) * Math.abs(TopLeftDotxel[0] + ((2 * XBoundary) / Zoom))) + TopLeftDotxel[0];
+      const CoordY = TopLeftDotxel[1] - ((MouseY / PixelBoundaryY) * (TopLeftDotxel[1] + ((2 * YBoundary) / Zoom)));
 
-      console.log({MouseX, MouseY, COo})
-
+      console.log({MouseX, MouseY, PixelBoundaryX, PixelBoundaryY});
       ZoomIn(CoordX, CoordY);
-    } else {
-      console.log("Error: click is outside of bounds");
     }
   });
 
   document.addEventListener('wheel', function (event) {
-    if (event.deltaY > 0) {
-      ZoomIncrement++;
-    } else if (ZoomIncrement > 1) {
-      ZoomIncrement--;
-    } else {
-      console.log('ZoomIncrement is at 1');
+    if (event.shiftKey) {
+      if (event.deltaY < 0) {
+        ZoomIncrement++;
+      } else if (ZoomIncrement > 1) {
+        ZoomIncrement--;
+      }
+
+      ZoomIncrementDisplay();
     }
-    console.log({ZoomIncrement});
+
   });
 
+  // add event listener for popup close
+  PopupCloseElement.addEventListener('click', ClosePopup);
 })();

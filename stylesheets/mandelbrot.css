@@ -6,11 +6,6 @@
     --background: #FEFFF3;
 }
 
-.dot-container{
-    height: 3px;
-    letter-spacing: 0px;
-}
-
 body {
     margin: 0px;
     background-color: black;
@@ -20,19 +15,51 @@ span {
     font-size: 75%;
 }
 
-.popup {
+.dot-container{
+    height: 3px;
+    letter-spacing: 0px;
+}
+
+.information-container {
+    background-color: #FEFFF3;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    align-self: center;
+    background-color: rgba(250, 250, 250, 0.5);
+}
+
+.information-container .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: var(--background);
-    color: var(--prim1);
-    width: 80%;
-    margin: auto;
-    padding-right: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    border: 10px  solid var(--seco1);
-    display: block;
-    overflow: hidden;
+    border: var(--prim1) solid 4px;
+    padding: 10px;
+}
+
+.information-container .close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+    font-size: 30px;
+    color: red;
+    cursor: pointer;
+}
+
+.increment-display {
+    display: none;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 300%;
+    position: absolute;
+    left: 80%;
 }
 
 #delete-me {
     height: 100vh;
 }
+

@@ -63,3 +63,7 @@ span {
     height: 100vh;
 }
 
+#tag-data {
+    display: none;
+}
+

@@ -9,7 +9,8 @@ const YDots = 300;
 let DotMatrix = []; // variable to store all dots in, so each one can be manipulated
 let Zoom = 1; // Zoom to determine delta stuff
 let ZoomIncrement = 1;
-let TopLeftDotxel = [-2, 2]; // Top left dotxel's position in the complex plane.
+let TopLeftDotxel = [-XBoundary, YBoundary]; // Top left dotxel's position in the complex plane.
+let ZoomFactor = 0;
 
 let ActiveIntervals = [];
 
@@ -56,7 +57,11 @@ function MandelbrotAlgorithm() {
 
 function ZoomIn(CoordX, CoordY) {
  // increment zooom by 1
-  Zoom += ZoomIncrement;
+  if (ZoomFactor == 0) {
+    Zoom += ZoomIncrement;
+  } else {
+    Zoom *= ZoomIncrement;
+  }
   // Determine top left dotxel according to mouse click position, boundaries and zoom
   TopLeftDotxel = [CoordX - (XBoundary / Zoom), CoordY + (YBoundary / Zoom)];
 
@@ -86,9 +91,13 @@ function ZoomOut() {
   }
 
   // Decrement Zoom and check(should never happen) if Zoom is less than one
-  Zoom -= ZoomIncrement;
-  if (Zoom < 1) {
+  if (ZoomFactor == 0) {
+    Zoom -= ZoomIncrement;
+    if (Zoom < 1) {
     Zoom = 1;
+    }
+  } else {
+    Zoom = Math.floor(Zoom / ZoomIncrement);
   }
 
   // The mandelbrot function will handle everything from here.
@@ -103,6 +112,13 @@ function ClosePopup() {
   }, 100)
 }
 
+function ResetMandelbrot() {
+  TopLeftDotxel = [-XBoundary, YBoundary];
+  Zoom = 1;
+  ZoomIncrement = 1;
+  MandelbrotAlgorithm();
+}
+
 function ZoomIncrementDisplay() {
   const DisplayIntervalMS = 100;
   const DisplayTimeMS = 1300;
@@ -113,8 +129,11 @@ function ZoomIncrementDisplay() {
   let LocalIndex = 0;
 
   ZoomDisplayContainer.style.display = 'block';
+  if (ZoomFactor == 0) {
   ZoomDisplayContainer.textContent = '+' + ZoomIncrement + 'x';
-
+  } else {
+    ZoomDisplayContainer.textContent = '*' + ZoomIncrement + 'x';
+  }
   ActiveIntervals.push("foo");
 
   const ActiveIntervalLengthAsWeFoundIt = ActiveIntervals.length;
@@ -203,11 +222,11 @@ function ZoomIncrementDisplay() {
       console.log('still with popup');
     } else if ((MouseX < PixelBoundaryX) && (MouseY < PixelBoundaryY)) {
       // Determine coords of click in complex plane, send them to zoomin() function.
-      const CoordX = ((MouseX / PixelBoundaryX) * Math.abs(TopLeftDotxel[0] + ((2 * XBoundary) / Zoom))) + TopLeftDotxel[0];
-      const CoordY = TopLeftDotxel[1] - ((MouseY / PixelBoundaryY) * (TopLeftDotxel[1] + ((2 * YBoundary) / Zoom)));
+      const CoordX = ((2 * MouseX * XBoundary) / (PixelBoundaryX * Zoom)) + TopLeftDotxel[0];
+      const CoordY = TopLeftDotxel[1] - ((2 * MouseY * YBoundary) / (PixelBoundaryY * Zoom));
 
       console.log({MouseX, MouseY, PixelBoundaryX, PixelBoundaryY});
-      ZoomIn(CoordX, CoordY);
+      ZoomIn(CoordX, CoordY, event);
     }
   });
 
@@ -222,6 +241,22 @@ function ZoomIncrementDisplay() {
       ZoomIncrementDisplay();
     }
 
+  });
+
+  document.addEventListener('keydown', function(event) {
+    // reset if user inputs r key.
+    if (event.key == 'r') {
+      ResetMandelbrot();
+    }
+    
+    // change zoom factor if . key pressed
+    if (event.key == '.') {
+      if (ZoomFactor == 0) {
+        ZoomFactor = 1;
+      } else {
+        ZoomFactor = 0;
+      }
+    }
   });
 
   // add event listener for popup close

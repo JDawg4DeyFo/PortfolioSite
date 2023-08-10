@@ -8,9 +8,9 @@ const YDots = 300;
 
 let DotMatrix = []; // variable to store all dots in, so each one can be manipulated
 let Zoom = 1; // Zoom to determine delta stuff
-let ZoomIncrement = 1;
+let ZoomIncrement = 2;
 let TopLeftDotxel = [-XBoundary, YBoundary]; // Top left dotxel's position in the complex plane.
-let ZoomFactor = 0;
+let ZoomFactor = 1;
 
 let ActiveIntervals = [];
 
